@@ -1,11 +1,21 @@
 import dotenv from "dotenv";
 import React, { useState } from "react";
-import ReactMapGL from "react-map-gl";
+import ReactMapGL, { Layer, Source } from "react-map-gl";
 
 dotenv.config();
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX;
 
-function MapBox() {
+const layerStyle = {
+  id: "data",
+  type: "fill",
+  paint: {
+    "fill-outline-color": "#ff0000",
+    "fill-color": "#04e40f",
+    "fill-opacity": 0.8,
+  },
+};
+
+function MapBox({ data }) {
   const [viewport, setViewport] = useState({
     width: 800,
     height: 800,
@@ -17,10 +27,14 @@ function MapBox() {
   return (
     <ReactMapGL
       {...viewport}
-      mapStyle="mapbox://styles/mapbox/streets-v9"
+      mapStyle="mapbox://styles/mapbox/streets-v11"
       onViewportChange={(nextViewport) => setViewport(nextViewport)}
       mapboxApiAccessToken={MAPBOX_TOKEN}
-    ></ReactMapGL>
+    >
+      <Source type="geojson" data={data}>
+        <Layer {...layerStyle} />
+      </Source>
+    </ReactMapGL>
   );
 }
 export default MapBox;

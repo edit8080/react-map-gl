@@ -1,7 +1,7 @@
-import MapBox from "./MapBox";
+import MapBoxContainer from "./containers/MapBoxContainer";
 
 function App() {
-  return <MapBox />;
+  return <MapBoxContainer />;
 }
 
 export default App;
